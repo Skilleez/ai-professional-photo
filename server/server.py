@@ -11,6 +11,7 @@ origins = [
     "https://ai-professional-photo.vercel.app",
     "https://ai-professional-photo.vercel.app/data",
     "https://ai-professional-photo.vercel.app/images",
+    "http://localhost:3000"
 ]
 
 # Add CORS middleware

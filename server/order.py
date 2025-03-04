@@ -6,11 +6,11 @@ import os
 
 load_dotenv()
 phot_api_key = os.getenv('PHOT_API_KEY')
-
 headers = {'x-api-key': phot_api_key}
 
 def check_order_status(order_id):
     url = f"https://prodapi.phot.ai/external/api/v1/user_activity/order-status?order_id={order_id}"
+    print(phot_api_key)
 
     while True:
         response = requests.get(url, headers=headers, data={})
