@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Header, Request
 from image import image
 from aws import upload_image, get_presigned
-from starlette.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import json
 from mongodb import store_url, images
@@ -32,9 +32,12 @@ async def get_images(x_user_id: str = Header(None)):
   print(json_list)
   return json_list
 
+origins = ["*"]    
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
+    allow_credentials=True,
+    expose_headers=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
