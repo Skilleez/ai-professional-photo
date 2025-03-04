@@ -9,6 +9,8 @@ from mongodb import store_url, images
 app = FastAPI()
 origins = [
     "https://ai-professional-photo.vercel.app",
+    "https://ai-professional-photo.vercel.app/data",
+    "https://ai-professional-photo.vercel.app/images",
 ]
 
 # Add CORS middleware
