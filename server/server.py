@@ -7,17 +7,10 @@ import json
 from mongodb import store_url, images
 
 app = FastAPI()
-origins = [
-    "https://ai-professional-photo.vercel.app",
-    "https://ai-professional-photo.vercel.app/data",
-    "https://ai-professional-photo.vercel.app/images",
-    "http://localhost:3000"
-]
 
-# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=['*'],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
