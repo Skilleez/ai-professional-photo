@@ -17,7 +17,7 @@ const Dashboard: React.FC = () => {
           return;
         }
 
-        const response = await fetch('http://localhost:8000/images', {
+        const response = await fetch('https://ai-professional-photo-backend.vercel.app/images', {
           headers: { 'x-user-id': userId },
         });
 

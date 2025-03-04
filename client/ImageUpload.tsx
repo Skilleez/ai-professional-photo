@@ -23,7 +23,7 @@ const ImageUpload: React.FC = () => {
     console.log(userId)
     console.log(file)
     try {
-      const response = await fetch('http://localhost:8000/data', {
+      const response = await fetch('https://ai-professional-photo-backend.vercel.app/data', {
         method: 'POST',
         headers: {
           'Content-Type': file.type,
