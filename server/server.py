@@ -12,11 +12,11 @@ app = FastAPI()
 #           'output_urls': ['https://photai-s3-bucket.apyhi.com/background_generator/output_image/2025-03-03/hmxf4ey_2025-03-03T07:17:55.906Z_output_0.webp', 'https://photai-s3-bucket.apyhi.com/background_generator/output_image/2025-03-03/hmxf4ey_2025-03-03T07:17:55.906Z_output_1.webp', 'https://photai-s3-bucket.apyhi.com/background_generator/output_image/2025-03-03/hmxf4ey_2025-03-03T07:17:55.906Z_output_2.webp', 'https://photai-s3-bucket.apyhi.com/background_generator/output_image/2025-03-03/hmxf4ey_2025-03-03T07:17:55.906Z_output_3.webp']}
 
 
-@app.get("/")
+@app.get("")
 async def root():
   return {"message": "Hello this is working"}
 
-@app.post("/data")
+@app.post("data")
 async def data(request: Request, x_user_id: str = Header(None)):
   image_bytes = await request.body()
   key = upload_image(x_user_id, image_bytes)
@@ -25,7 +25,7 @@ async def data(request: Request, x_user_id: str = Header(None)):
   store_url(x_user_id, status, url)
   return
 
-@app.get("/images")
+@app.get("images")
 async def get_images(x_user_id: str = Header(None)):
   list = images(x_user_id)
   json_list = json.dumps(list)
