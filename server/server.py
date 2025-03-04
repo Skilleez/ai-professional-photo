@@ -7,15 +7,18 @@ import json
 from mongodb import store_url, images
 
 app = FastAPI()
-# Enable CORS
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["http://localhost:3000"],  # Allow only your frontend origin
-#     allow_credentials=True,
-#     allow_methods=["*"],  # Allow all HTTP methods (GET, POST, PUT, DELETE)
-#     allow_headers=["*"],  # Allow all headers
-# )
+origins = [
+    "https://ai-professional-photo.vercel.app",
+]
 
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # sample = {'order_status_code': 200, 'order_status': 'order_complete', 
 #           'output_urls': ['https://photai-s3-bucket.apyhi.com/background_generator/output_image/2025-03-03/hmxf4ey_2025-03-03T07:17:55.906Z_output_0.webp', 'https://photai-s3-bucket.apyhi.com/background_generator/output_image/2025-03-03/hmxf4ey_2025-03-03T07:17:55.906Z_output_1.webp', 'https://photai-s3-bucket.apyhi.com/background_generator/output_image/2025-03-03/hmxf4ey_2025-03-03T07:17:55.906Z_output_2.webp', 'https://photai-s3-bucket.apyhi.com/background_generator/output_image/2025-03-03/hmxf4ey_2025-03-03T07:17:55.906Z_output_3.webp']}
 
