@@ -18,8 +18,8 @@ def root():
 @app.route("/data", methods=['POST'])
 @cross_origin()
 def data():
-  x_user_id = request.headers.get("x_user_id")
-  image_bytes = request.data
+  x_user_id = request.headers.get("X-User-Id")
+  image_bytes = request.files["file"].read()
   key = upload_image(x_user_id, image_bytes)
   if key == None:
     return jsonify({"message": "Image processing failed at AWS uploadimage"}), 400

@@ -23,22 +23,28 @@ const ImageUpload: React.FC = () => {
     setIsUploading(true);
     const userId = localStorage.getItem('user_id')
     console.log(userId)
-    console.log(file)
+    console.log(file instanceof Blob)
+
     const options = {
       maxSizeMB: 1, // Compress to 1MB
       maxWidthOrHeight: 1920, // Resize if needed
     };
     
     const compressedFile = await imageCompression(file, options);
+    console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+    console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`);
+    console.log(file.size / 1024 / 1024)
+    console.log(compressedFile)
+    const formData = new FormData();
+    formData.append('file', compressedFile);
     try {
       const response = await fetch('https://ai-professional-photo-backend.vercel.app/data', {
       // const response = await fetch('http://localhost:5000/data', {
         method: 'POST',
         headers: {
-          'Content-Type': file.type,
           'X-User-Id': userId || '',
         },
-        body: compressedFile,
+        body: formData,
       });
       
       const url = await response.json();
