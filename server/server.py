@@ -5,6 +5,7 @@ from aws import upload_image, get_presigned
 from pydantic import BaseModel
 import json
 from mongodb import store_url, images
+import traceback
 
 app = Flask(__name__)
 CORS(app, support_credentials=True)
@@ -22,17 +23,16 @@ def data():
   if "file" not in request.files:
         return jsonify({"error": "No file provided"}), 400
   image_bytes = request.files["file"].read()
-  key = upload_image(x_user_id, image_bytes)
-  if key == None:
-    return jsonify({"message": "Image processing failed at AWS uploadimage"}), 400
-  url = get_presigned(key)
-  if url == None:
-    return jsonify({"message": "Image processing failed at AWS getpresigned"}), 400
-  status = image(url)
-  res = store_url(x_user_id, status, url)
-  if res == None:
-    return jsonify({"message": "Failure at MongoDB Store"}), 400
-  return jsonify({"message": "Image processed successfully"}), 200
+  try:
+    key = upload_image(x_user_id, image_bytes)
+    url = get_presigned(key)
+    status = image(url)
+    res = store_url(x_user_id, status, url)
+    return jsonify({"message": "Image processed successfully"}), 200
+  except Exception as e:
+    print("Error occurred:", e)
+    traceback.print_exc()  # Print the full error stack trace
+    return jsonify({"error": str(e)}), 400
 
 @app.route("/images", methods=["GET"])
 @cross_origin()
