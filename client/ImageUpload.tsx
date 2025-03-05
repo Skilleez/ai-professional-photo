@@ -38,7 +38,7 @@ const ImageUpload: React.FC = () => {
     const formData = new FormData();
     formData.append('file', compressedFile);
     try {
-      const response = await fetch('https://ai-professional-photo-backend.vercel.app/data', {
+      await fetch('https://ai-professional-photo-backend.vercel.app/data', {
       // const response = await fetch('http://localhost:5000/data', {
         method: 'POST',
         headers: {
@@ -47,13 +47,11 @@ const ImageUpload: React.FC = () => {
         body: formData,
       });
       
-      const url = await response.json();
-      console.log(url)
       router.push('/dashboard')
 
     } catch (error) {
       console.error('Error uploading image:', error);
-      alert('Error uploading image!');
+      // alert('Error uploading image!');
     } finally {
       setIsUploading(false);
     }
