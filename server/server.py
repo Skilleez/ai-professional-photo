@@ -19,6 +19,8 @@ def root():
 @cross_origin()
 def data():
   x_user_id = request.headers.get("X-User-Id")
+  if "file" not in request.files:
+        return jsonify({"error": "No file provided"}), 400
   image_bytes = request.files["file"].read()
   key = upload_image(x_user_id, image_bytes)
   if key == None:
