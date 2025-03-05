@@ -16,25 +16,26 @@ const Dashboard: React.FC = () => {
           router.push('/');
           return;
         }
-
         const response = await fetch('https://ai-professional-photo-backend.vercel.app/images', {
+        // const response = await fetch('http://localhost:8000/images', {
           headers: { 'x-user-id': userId },
         });
 
         if (!response.ok) throw new Error('Failed to fetch images');
 
         const data = await response.json();
-        const d = data.split(",")
-        const list: string[] = []
-        for (const entry of d) {
-          const m = entry.match(/(http.*?\.webp)/g)
-          list.push(m[0])
-        }
+        console.log(data)
+        // const d = data.split(",")
+        // const list: string[] = []
+        // for (const entry of d) {
+        //   const m = entry.match(/(http.*?\.webp)/g)
+        //   list.push(m[0])
+        // }
         
 
-        console.log(list)
-        console.log(typeof list)
-        setImages(list);
+        // console.log(list)
+        // console.log(typeof list)
+        setImages(data);
       } catch (error) {
         console.error('Error fetching images:', error);
       }
