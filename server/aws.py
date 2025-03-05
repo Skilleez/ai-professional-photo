@@ -9,17 +9,6 @@ def upload_image(user_id, image):
   s3.put_object(Bucket=bucket, Key=file_name, Body=image)
   return file_name
 
-def get_image(user_id):
-  url = []
-  try:
-    for item in s3.list_objects(Bucket=bucket)['Contents']:
-      presigned_url = s3.generate_presigned_url('get_object', Params = {'Bucket': bucket, 'Key': item['Key']}, ExpiresIn = 100)
-      url.append(presigned_url)
-  except Exception as e:
-    pass
-  print(url)
-  return url
-
 
 def get_presigned(key):
   try:

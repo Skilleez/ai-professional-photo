@@ -9,9 +9,6 @@ import os
 load_dotenv()
 uri = os.getenv("MONGO_URI")
 
-client = MongoClient(uri, tlsCAFile=certifi.where())
-database = client.image
-collection = database.images
 
 class ImageData(BaseModel):
     user_id: str
@@ -19,6 +16,10 @@ class ImageData(BaseModel):
     generated_images: list[str]
 
 def store_url(user_id, status: ImageData, url):
+    client = MongoClient(uri, tlsCAFile=certifi.where())
+    database = client.image
+    collection = database.images
+
     try:
         record = {
             "user_id": user_id,
@@ -30,9 +31,11 @@ def store_url(user_id, status: ImageData, url):
 
     except Exception as e:
         print(e)
+        return None
 
     finally:
         client.close()
+        return "Successful"
 
 
 def images(user_id):
@@ -43,4 +46,5 @@ def images(user_id):
     records = collection.find({ "user_id": user_id})
     for doc in records:
         list += doc['generated_images']
+    client.close()
     return list

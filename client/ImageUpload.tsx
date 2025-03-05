@@ -18,7 +18,7 @@ const ImageUpload: React.FC = () => {
     },
   });
 
-  const uploadImage = async () => {
+  const imageUpload = async () => {
     if (!file) return alert('No image selected!');
     setIsUploading(true);
     const userId = localStorage.getItem('user_id')
@@ -32,7 +32,7 @@ const ImageUpload: React.FC = () => {
     const compressedFile = await imageCompression(file, options);
     try {
       const response = await fetch('https://ai-professional-photo-backend.vercel.app/data', {
-      // const response = await fetch('http://localhost:8000/data', {
+      // const response = await fetch('http://localhost:5000/data', {
         method: 'POST',
         headers: {
           'Content-Type': file.type,
@@ -68,7 +68,7 @@ const ImageUpload: React.FC = () => {
       {file && (
         <button 
         className="mt-4 px-4 py-2 bg-blue-500 text-white text-center rounded" 
-        onClick={uploadImage}
+        onClick={imageUpload}
         disabled={isUploading}>
           Upload
         </button>
