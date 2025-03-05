@@ -1,6 +1,8 @@
 import React, { useState} from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useRouter } from 'next/router';
+import imageCompression from 'browser-image-compression';
+
 
 const ImageUpload: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -22,6 +24,12 @@ const ImageUpload: React.FC = () => {
     const userId = localStorage.getItem('user_id')
     console.log(userId)
     console.log(file)
+    const options = {
+      maxSizeMB: 1, // Compress to 1MB
+      maxWidthOrHeight: 1920, // Resize if needed
+    };
+    
+    const compressedFile = await imageCompression(file, options);
     try {
       const response = await fetch('https://ai-professional-photo-backend.vercel.app/data', {
       // const response = await fetch('http://localhost:8000/data', {
@@ -30,7 +38,7 @@ const ImageUpload: React.FC = () => {
           'Content-Type': file.type,
           'X-User-Id': userId || '',
         },
-        body: file,
+        body: compressedFile,
       });
       
       const url = await response.json();
